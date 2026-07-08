@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FY27 Off-Cycle Attrition Dashboard — SASIA India</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #07090f;
+    --surface: #0d1120;
+    --card: #111827;
+    --border: #1e2d47;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --fins: #38bdf8;
+    --cmi: #a78bfa;
+    --tmt: #f472b6;
+    --esmb: #fb923c;
+    --core: #34d399;
+    --mc: #60a5fa;
+    --tableau: #fbbf24;
+    --mulesoft: #f87171;
+    --slack: #c084fc;
+    --nco: #fb923c;
+    --nco-mc: #f472b6;
+    --wa: #4ade80;
+    --bad-debt: #f87171;
+    --restructure: #fbbf24;
+    --ramp: #94a3b8;
+    --accent: #38bdf8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #0d1120 0%, #0f1e38 60%, #0a1628 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 32px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(56,189,248,.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -.3px;
+  }
+  .header h1 span {
+    color: var(--accent);
+  }
+  .header-sub {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .badge {
+    background: rgba(56,189,248,.1);
+    border: 1px solid rgba(56,189,248,.25);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* ── KPI ROW ── */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    padding: 16px 32px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .kpi {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 2px 2px 0 0;
+  }
+  .kpi.total::before { background: var(--accent); }
+  .kpi.records::before { background: var(--muted); }
+  .kpi.nco-kpi::before { background: var(--nco); }
+  .kpi.nco-mc-kpi::before { background: var(--nco-mc); }
+  .kpi.wa-kpi::before { background: var(--wa); }
+  .kpi.bd-kpi::before { background: var(--bad-debt); }
+  .kpi-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .kpi-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -.5px;
+    line-height: 1;
+  }
+  .kpi-value.accent { color: var(--accent); }
+  .kpi-value.orange { color: var(--nco); }
+  .kpi-value.pink { color: var(--nco-mc); }
+  .kpi-value.green { color: var(--wa); }
+  .kpi-value.red { color: var(--bad-debt); }
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .kpi-pct {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 10px;
+    margin-top: 4px;
+  }
+  .kpi-pct.orange { background: rgba(251,146,60,.15); color: var(--nco); }
+  .kpi-pct.pink { background: rgba(244,114,182,.15); color: var(--nco-mc); }
+  .kpi-pct.green { background: rgba(74,222,128,.15); color: var(--wa); }
+  .kpi-pct.red { background: rgba(248,113,113,.15); color: var(--bad-debt); }
+
+  /* ── MAIN CONTENT ── */
+  .content {
+    padding: 20px 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .section-title::before {
+    content: '';
+    width: 3px;
+    height: 14px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .section-title.seg::before { background: var(--accent); }
+  .section-title.cloud::before { background: var(--core); }
+  .section-title.nco::before { background: var(--nco); }
+  .section-title.wa::before { background: var(--wa); }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-title small {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  /* ── GRID LAYOUTS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+  .grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; }
+  .grid-2-3 { display: grid; grid-template-columns: 2fr 3fr; gap: 16px; }
+
+  /* ── CHART CONTAINERS ── */
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+  }
+  .chart-wrap.h200 { height: 200px; }
+  .chart-wrap.h220 { height: 220px; }
+  .chart-wrap.h260 { height: 260px; }
+  .chart-wrap.h300 { height: 300px; }
+  .chart-wrap.h320 { height: 320px; }
+  .chart-wrap.h360 { height: 360px; }
+
+  /* ── SEGMENT LEGEND ── */
+  .seg-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+  }
+  .seg-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .seg-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .seg-info { flex: 1; }
+  .seg-name { font-size: 12px; font-weight: 600; color: var(--text); }
+  .seg-vals { font-size: 11px; color: var(--muted); }
+  .seg-bar-wrap {
+    height: 4px;
+    background: rgba(255,255,255,.06);
+    border-radius: 2px;
+    margin-top: 4px;
+    overflow: hidden;
+  }
+  .seg-bar { height: 100%; border-radius: 2px; }
+
+  /* ── HEATMAP MATRIX ── */
+  .heatmap {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .heatmap th, .heatmap td {
+    padding: 10px 12px;
+    text-align: center;
+    font-size: 11px;
+  }
+  .heatmap th {
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    border-bottom: 1px solid var(--border);
+    font-size: 10px;
+  }
+  .heatmap th.left-th { text-align: left; }
+  .heatmap td.seg-cell {
+    text-align: left;
+    font-weight: 600;
+    color: #fff;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .heatmap tr:not(:last-child) td {
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .heat-cell {
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+    min-width: 80px;
+    display: inline-block;
+    padding: 6px 10px;
+    width: 100%;
+  }
+  .heat-zero { color: var(--muted); background: transparent; }
+
+  /* ── NCO TABLES ── */
+  .nco-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .nco-table th {
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+  .nco-table th.right { text-align: right; }
+  .nco-table td {
+    padding: 9px 12px;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+  }
+  .nco-table td.right { text-align: right; font-weight: 600; }
+  .nco-table td.muted { color: var(--muted); }
+  .nco-table tr:last-child td { border-bottom: none; }
+  .seg-tag {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .seg-tag.FINS { background: rgba(56,189,248,.15); color: var(--fins); }
+  .seg-tag.CMI { background: rgba(167,139,250,.15); color: var(--cmi); }
+  .seg-tag.TMT { background: rgba(244,114,182,.15); color: var(--tmt); }
+  .seg-tag.ESMB { background: rgba(251,146,60,.15); color: var(--esmb); }
+  .wa-tag {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(74,222,128,.15);
+    color: var(--wa);
+  }
+
+  /* ── DONUT CENTER ── */
+  .donut-wrap { position: relative; }
+  .donut-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+  }
+  .donut-center-val { font-size: 22px; font-weight: 700; color: #fff; line-height: 1; }
+  .donut-center-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; }
+
+  /* ── TYPE BREAKDOWN BAR ── */
+  .stacked-bar-row {
+    display: flex;
+    height: 28px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .stacked-seg { transition: opacity .2s; }
+  .stacked-seg:hover { opacity: .85; }
+  .legend-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+  /* ── WATERFALL / HIGHLIGHT ── */
+  .highlight-box {
+    background: rgba(74,222,128,.06);
+    border: 1px solid rgba(74,222,128,.2);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .highlight-val { font-size: 28px; font-weight: 700; color: var(--wa); line-height: 1; }
+  .highlight-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .highlight-sub { font-size: 11px; color: var(--text); margin-top: 8px; }
+
+  .alert-box {
+    background: rgba(244,114,182,.06);
+    border: 1px solid rgba(244,114,182,.2);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .alert-val { font-size: 28px; font-weight: 700; color: var(--nco-mc); line-height: 1; }
+
+  /* ── PROGRESS BARS ── */
+  .prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .prog-label { font-size: 11px; color: var(--text); width: 70px; flex-shrink: 0; }
+  .prog-bar-bg { flex: 1; height: 6px; background: rgba(255,255,255,.06); border-radius: 3px; overflow: hidden; }
+  .prog-bar { height: 100%; border-radius: 3px; }
+  .prog-val { font-size: 11px; font-weight: 600; color: var(--text); width: 60px; text-align: right; flex-shrink: 0; }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 16px 32px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    background: var(--surface);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 4px 0;
+  }
+
+  /* ── STAT CHIP ── */
+  .stat-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .stat-chip {
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    text-align: center;
+    flex: 1;
+    min-width: 80px;
+  }
+  .stat-chip-val { font-size: 16px; font-weight: 700; color: #fff; }
+  .stat-chip-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>FY27 Off-Cycle Attrition <span>Dashboard</span></h1>
+      <div class="header-sub">SASIA India · All Segments · As of July 8, 2026</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <span class="badge">589 Opportunities</span>
+      <span class="badge" style="background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.25);color:#f87171;">Risk: High</span>
+      <span class="badge" style="background:rgba(251,146,60,.1);border-color:rgba(251,146,60,.25);color:#fb923c;">NCO: 48 Cases</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ KPI ROW ═══ -->
+<div class="kpi-row">
+  <div class="kpi total">
+    <div class="kpi-label">Total Attrition</div>
+    <div class="kpi-value accent">$6.67M</div>
+    <div class="kpi-sub">589 off-cycle records</div>
+  </div>
+  <div class="kpi bd-kpi">
+    <div class="kpi-label">Bad Debt</div>
+    <div class="kpi-value red">$4.30M</div>
+    <div class="kpi-sub">444 records</div>
+    <span class="kpi-pct red">64.5% of total</span>
+  </div>
+  <div class="kpi" style="border-top-color:var(--restructure);">
+    <style>.restructure-kpi::before{background:var(--restructure)!important;}</style>
+    <div class="kpi-label">Restructure / Cancel</div>
+    <div class="kpi-value" style="color:var(--restructure);">$1.21M</div>
+    <div class="kpi-sub">91 records</div>
+    <span class="kpi-pct" style="background:rgba(251,191,36,.15);color:var(--restructure);">18.1% of total</span>
+  </div>
+  <div class="kpi nco-kpi">
+    <div class="kpi-label">Non-Coterminous (NCO)</div>
+    <div class="kpi-value orange">$1.10M</div>
+    <div class="kpi-sub">48 records</div>
+    <span class="kpi-pct orange">16.5% of total</span>
+  </div>
+  <div class="kpi nco-mc-kpi">
+    <div class="kpi-label">NCO + MC Cloud</div>
+    <div class="kpi-value pink">$774K</div>
+    <div class="kpi-sub">25 records</div>
+    <span class="kpi-pct pink">70.4% of NCO $</span>
+  </div>
+  <div class="kpi wa-kpi">
+    <div class="kpi-label">NCO · WhatsApp Risk</div>
+    <div class="kpi-value green">$397K</div>
+    <div class="kpi-sub">9 accounts</div>
+    <span class="kpi-pct green">51.2% of NCO+MC</span>
+  </div>
+</div>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<div class="content">
+
+  <!-- ══ SECTION 1: SEGMENT TRENDS ══ -->
+  <div>
+    <div class="section-title seg">01 · Offcycle Trends by Sales Segment</div>
+    <div class="grid-2">
+
+      <!-- Donut -->
+      <div class="card">
+        <div class="card-title">
+          Attrition by Segment
+          <small>% of $6.67M total</small>
+        </div>
+        <div style="display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center;">
+          <div class="donut-wrap" style="position:relative;height:200px;width:200px;">
+            <canvas id="segDonut"></canvas>
+            <div class="donut-center">
+              <div class="donut-center-val">$6.67M</div>
+              <div class="donut-center-label">Total</div>
+            </div>
+          </div>
+          <div class="seg-legend">
+            <div class="seg-item">
+              <div class="seg-dot" style="background:var(--esmb);"></div>
+              <div class="seg-info">
+                <div style="display:flex;justify-content:space-between;"><span class="seg-name">ESMB</span><span style="font-size:12px;font-weight:700;color:var(--esmb);">$2.40M</span></div>
+                <div class="seg-vals">146 records · 36.0%</div>
+                <div class="seg-bar-wrap"><div class="seg-bar" style="width:36%;background:var(--esmb);"></div></div>
+              </div>
+            </div>
+            <div class="seg-item">
+              <div class="seg-dot" style="background:var(--tmt);"></div>
+              <div class="seg-info">
+                <div style="display:flex;justify-content:space-between;"><span class="seg-name">TMT/HRE</span><span style="font-size:12px;font-weight:700;color:var(--tmt);">$1.79M</span></div>
+                <div class="seg-vals">215 records · 26.8%</div>
+                <div class="seg-bar-wrap"><div class="seg-bar" style="width:26.8%;background:var(--tmt);"></div></div>
+              </div>
+            </div>
+            <div class="seg-item">
+              <div class="seg-dot" style="background:var(--cmi);"></div>
+              <div class="seg-info">
+                <div style="display:flex;justify-content:space-between;"><span class="seg-name">CMI</span><span style="font-size:12px;font-weight:700;color:var(--cmi);">$1.76M</span></div>
+                <div class="seg-vals">180 records · 26.4%</div>
+                <div class="seg-bar-wrap"><div class="seg-bar" style="width:26.4%;background:var(--cmi);"></div></div>
+              </div>
+            </div>
+            <div class="seg-item">
+              <div class="seg-dot" style="background:var(--fins);"></div>
+              <div class="seg-info">
+                <div style="display:flex;justify-content:space-between;"><span class="seg-name">FINS</span><span style="font-size:12px;font-weight:700;color:var(--fins);">$727K</span></div>
+                <div class="seg-vals">48 records · 10.9%</div>
+                <div class="seg-bar-wrap"><div class="seg-bar" style="width:10.9%;background:var(--fins);"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stacked Bar + Type Breakdown -->
+      <div class="card">
+        <div class="card-title">
+          Attrition Composition by Segment
+          <small>Type breakdown · $K</small>
+        </div>
+        <div class="chart-wrap h260">
+          <canvas id="segStackedBar"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Volume vs $ comparison -->
+    <div style="margin-top:16px;" class="card">
+      <div class="card-title">Segment Performance Matrix <small>Record volume vs. attrition value</small></div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+        <div style="background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.2);border-radius:10px;padding:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <span style="font-weight:700;font-size:14px;color:var(--fins);">FINS</span>
+            <span class="badge" style="background:rgba(56,189,248,.1);border-color:rgba(56,189,248,.25);color:var(--fins);">48 opps</span>
+          </div>
+          <div style="font-size:26px;font-weight:700;color:#fff;line-height:1;">$727K</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">Avg $15.1K / opp</div>
+          <div class="divider" style="margin:10px 0;"></div>
+          <div style="font-size:11px;color:var(--text);">Top driver: <strong style="color:var(--fins);">NCO $460K</strong></div>
+          <div style="font-size:11px;color:var(--muted);">MC-heavy segment</div>
+        </div>
+        <div style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <span style="font-weight:700;font-size:14px;color:var(--cmi);">CMI</span>
+            <span class="badge" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.25);color:var(--cmi);">180 opps</span>
+          </div>
+          <div style="font-size:26px;font-weight:700;color:#fff;line-height:1;">$1.76M</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">Avg $9.8K / opp</div>
+          <div class="divider" style="margin:10px 0;"></div>
+          <div style="font-size:11px;color:var(--text);">Top driver: <strong style="color:var(--bad-debt);">Bad Debt $862K</strong></div>
+          <div style="font-size:11px;color:var(--muted);">Core + MC exposure</div>
+        </div>
+        <div style="background:rgba(244,114,182,.06);border:1px solid rgba(244,114,182,.2);border-radius:10px;padding:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <span style="font-weight:700;font-size:14px;color:var(--tmt);">TMT/HRE</span>
+            <span class="badge" style="background:rgba(244,114,182,.1);border-color:rgba(244,114,182,.25);color:var(--tmt);">215 opps</span>
+          </div>
+          <div style="font-size:26px;font-weight:700;color:#fff;line-height:1;">$1.79M</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">Avg $8.3K / opp</div>
+          <div class="divider" style="margin:10px 0;"></div>
+          <div style="font-size:11px;color:var(--text);">Top driver: <strong style="color:var(--bad-debt);">Bad Debt $1.27M</strong></div>
+          <div style="font-size:11px;color:var(--muted);">Highest volume segment</div>
+        </div>
+        <div style="background:rgba(251,146,60,.06);border:1px solid rgba(251,146,60,.2);border-radius:10px;padding:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <span style="font-weight:700;font-size:14px;color:var(--esmb);">ESMB</span>
+            <span class="badge" style="background:rgba(251,146,60,.1);border-color:rgba(251,146,60,.25);color:var(--esmb);">146 opps</span>
+          </div>
+          <div style="font-size:26px;font-weight:700;color:#fff;line-height:1;">$2.40M</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">Avg $16.4K / opp</div>
+          <div class="divider" style="margin:10px 0;"></div>
+          <div style="font-size:11px;color:var(--text);">Top driver: <strong style="color:var(--bad-debt);">Bad Debt $2.07M</strong></div>
+          <div style="font-size:11px;color:var(--muted);">⚠ Highest $ at risk</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 2: CLOUD HOTSPOTS ══ -->
+  <div>
+    <div class="section-title cloud">02 · Offcycle Hotspots by Cloud within Segments</div>
+    <div class="grid-2-3">
+
+      <!-- Heatmap Table -->
+      <div class="card">
+        <div class="card-title">Cloud Attrition Heat Matrix <small>$ value intensity</small></div>
+        <table class="heatmap">
+          <thead>
+            <tr>
+              <th class="left-th">Segment</th>
+              <th style="color:var(--core);">Core</th>
+              <th style="color:var(--mc);">MC</th>
+              <th style="color:var(--tableau);">Tableau</th>
+              <th style="color:var(--mulesoft);">MuleSoft</th>
+              <th style="color:var(--slack);">Slack</th>
+            </tr>
+          </thead>
+          <tbody id="heatmapBody"></tbody>
+        </table>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Heat Scale</div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <div style="height:8px;flex:1;border-radius:4px;background:linear-gradient(to right,rgba(255,255,255,.06),rgba(56,189,248,.6));"></div>
+            <span style="font-size:10px;color:var(--muted);">$0 → $1.5M+</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grouped Bar Chart -->
+      <div class="card">
+        <div class="card-title">Cloud Attrition by Segment <small>$K · stacked view</small></div>
+        <div class="chart-wrap h300">
+          <canvas id="cloudBar"></canvas>
+        </div>
+        <div class="legend-row" style="margin-top:12px;">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--core);"></div>Core CRM</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--mc);"></div>Marketing Cloud</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--tableau);"></div>Tableau</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--mulesoft);"></div>MuleSoft</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--slack);"></div>Slack</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Cloud concentration -->
+    <div style="margin-top:16px;" class="card">
+      <div class="card-title">Cloud Concentration Analysis <small>% of each segment's attrition tied to each cloud</small></div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:4px 0;">
+        <div style="text-align:center;padding:8px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);">Cloud</div>
+        <div style="text-align:center;padding:8px;font-size:11px;font-weight:700;color:var(--fins);">FINS</div>
+        <div style="text-align:center;padding:8px;font-size:11px;font-weight:700;color:var(--cmi);">CMI</div>
+        <div style="text-align:center;padding:8px;font-size:11px;font-weight:700;color:var(--tmt);">TMT/HRE</div>
+        <div style="text-align:center;padding:8px;font-size:11px;font-weight:700;color:var(--esmb);">ESMB</div>
+      </div>
+      <div id="cloudConcentration"></div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3: NCO ANALYSIS ══ -->
+  <div>
+    <div class="section-title nco">03 · Non-Coterminous Order (NCO) Metrics</div>
+    <div class="grid-3">
+
+      <!-- NCO Summary -->
+      <div class="card">
+        <div class="card-title">NCO Overview</div>
+        <div style="text-align:center;padding:10px 0;">
+          <div style="font-size:38px;font-weight:800;color:var(--nco);line-height:1;">$1.10M</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px;">Total NCO Attrition · 48 records</div>
+          <div style="margin:16px 0;padding:14px;background:rgba(251,146,60,.06);border:1px solid rgba(251,146,60,.2);border-radius:8px;">
+            <div style="font-size:22px;font-weight:700;color:#fff;">16.5%</div>
+            <div style="font-size:11px;color:var(--muted);">of total off-cycle attrition</div>
+          </div>
+        </div>
+        <div class="stat-chips">
+          <div class="stat-chip">
+            <div class="stat-chip-val" style="color:var(--nco);">48</div>
+            <div class="stat-chip-label">Records</div>
+          </div>
+          <div class="stat-chip">
+            <div class="stat-chip-val" style="color:#fff;">$22.9K</div>
+            <div class="stat-chip-label">Avg / Opp</div>
+          </div>
+          <div class="stat-chip">
+            <div class="stat-chip-val" style="color:var(--fins);">FINS</div>
+            <div class="stat-chip-label">Top Seg $</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NCO by Segment Donut -->
+      <div class="card">
+        <div class="card-title">NCO Distribution by Segment</div>
+        <div style="position:relative;height:180px;">
+          <canvas id="ncoDonut"></canvas>
+          <div class="donut-center">
+            <div class="donut-center-val">48</div>
+            <div class="donut-center-label">Records</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--fins);display:inline-block;"></span><span style="font-size:11px;">FINS</span></span>
+            <span style="font-size:12px;font-weight:700;color:var(--fins);">$460K · 11 opps</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--cmi);display:inline-block;"></span><span style="font-size:11px;">CMI</span></span>
+            <span style="font-size:12px;font-weight:700;color:var(--cmi);">$529K · 18 opps</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--tmt);display:inline-block;"></span><span style="font-size:11px;">TMT/HRE</span></span>
+            <span style="font-size:12px;font-weight:700;color:var(--tmt);">$110K · 18 opps</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--esmb);display:inline-block;"></span><span style="font-size:11px;">ESMB</span></span>
+            <span style="font-size:12px;font-weight:700;color:var(--esmb);">$0 · 1 opp</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NCO Attrition Reason -->
+      <div class="card">
+        <div class="card-title">NCO — Attrition Type Mix</div>
+        <div class="chart-wrap h180">
+          <canvas id="ncoTypeBar"></canvas>
+        </div>
+        <div style="margin-top:12px;padding:12px;background:rgba(251,146,60,.06);border:1px solid rgba(251,146,60,.15);border-radius:8px;">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">Key Insight</div>
+          <div style="font-size:12px;color:var(--text);">NCO exclusively drives <strong style="color:var(--nco);">non-renewal timing risk</strong> — contract misalignment across multi-cloud deals. FINS has highest $ concentration at <strong style="color:var(--fins);">41.9% of NCO total</strong>.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SECTION 4: NCO + MC (WhatsApp) ══ -->
+  <div>
+    <div class="section-title wa">04 · NCO + Marketing Cloud — WhatsApp Pricing Risk</div>
+    <div class="grid-2">
+
+      <!-- Funnel metrics -->
+      <div class="card">
+        <div class="card-title">NCO → MC → WhatsApp Risk Funnel</div>
+
+        <!-- Funnel visual -->
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+          <!-- Total NCO -->
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
+              <span style="color:var(--muted);">All NCO</span>
+              <span style="font-weight:700;color:var(--nco);">$1.10M · 48 records</span>
+            </div>
+            <div style="height:22px;background:rgba(251,146,60,.2);border-radius:4px;position:relative;overflow:hidden;">
+              <div style="height:100%;width:100%;background:var(--nco);border-radius:4px;opacity:.7;"></div>
+            </div>
+          </div>
+          <!-- NCO + MC -->
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
+              <span style="color:var(--muted);">NCO with MC Cloud</span>
+              <span style="font-weight:700;color:var(--nco-mc);">$774K · 25 records <span style="font-weight:400;color:var(--muted);">(70.4%)</span></span>
+            </div>
+            <div style="height:22px;background:rgba(244,114,182,.15);border-radius:4px;overflow:hidden;">
+              <div style="height:100%;width:70.4%;background:var(--nco-mc);border-radius:4px;opacity:.8;"></div>
+            </div>
+          </div>
+          <!-- WhatsApp -->
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
+              <span style="color:var(--muted);">NCO+MC with WhatsApp Risk</span>
+              <span style="font-weight:700;color:var(--wa);">$397K · 9 records <span style="font-weight:400;color:var(--muted);">(36.1% of NCO+MC)</span></span>
+            </div>
+            <div style="height:22px;background:rgba(74,222,128,.1);border-radius:4px;overflow:hidden;">
+              <div style="height:100%;width:51.2%;background:var(--wa);border-radius:4px;opacity:.8;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Key Stats -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+          <div class="alert-box">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px;">Top WA Risk Account</div>
+            <div style="font-size:13px;font-weight:700;color:var(--nco-mc);">M&M Financial</div>
+            <div style="font-size:22px;font-weight:800;color:#fff;line-height:1.1;">$397K</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;">FINS · MCT ExactTarget</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:6px;line-height:1.4;">32% WA consumed. Meta pricing challenge flagged.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px;">
+              <div style="font-size:10px;text-transform:uppercase;color:var(--muted);">NCO+MC by Seg (FINS)</div>
+              <div style="font-size:18px;font-weight:700;color:var(--fins);">$437K</div>
+              <div style="font-size:10px;color:var(--muted);">11 NCO opps incl. 5 WA accounts</div>
+            </div>
+            <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px;">
+              <div style="font-size:10px;text-transform:uppercase;color:var(--muted);">NCO+MC by Seg (CMI)</div>
+              <div style="font-size:18px;font-weight:700;color:var(--cmi);">$337K</div>
+              <div style="font-size:10px;color:var(--muted);">Eicher $223K + Parag Milk $114K</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WhatsApp challenge note -->
+        <div style="margin-top:14px;padding:12px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.15);border-radius:8px;">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--wa);margin-bottom:6px;">WhatsApp Pricing Context</div>
+          <div style="font-size:11px;color:var(--text);line-height:1.6;">Meta's new <strong>consumable pricing model</strong> is the primary challenge across WA-linked NCO accounts. Low adoption (avg ~32% consumed) compounds the renewal risk — customers questioning ROI ahead of contract dates.</div>
+        </div>
+      </div>
+
+      <!-- NCO+MC Account Table -->
+      <div class="card">
+        <div class="card-title">
+          NCO + MC Accounts with Attrition
+          <small>Top opportunities by $ at risk</small>
+        </div>
+        <table class="nco-table">
+          <thead>
+            <tr>
+              <th>Account</th>
+              <th>Seg</th>
+              <th>WA?</th>
+              <th class="right">Attrition</th>
+              <th class="right">Stage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mahindra & Mahindra Financial Svcs</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right" style="color:#fff;"><strong>$396,822</strong></td>
+              <td class="right muted">01 Initiate</td>
+            </tr>
+            <tr>
+              <td>Eicher Motors Limited</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right" style="color:#fff;"><strong>$223,329</strong></td>
+              <td class="right muted">01 Initiate</td>
+            </tr>
+            <tr>
+              <td>Parag Milk Foods Limited</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right" style="color:#fff;"><strong>$113,929</strong></td>
+              <td class="right muted">01 Initiate</td>
+            </tr>
+            <tr>
+              <td>Aditya Birla Capital Ltd.</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right" style="color:#fff;"><strong>$40,254</strong></td>
+              <td class="right muted">01 Initiate</td>
+            </tr>
+            <tr style="opacity:.55;">
+              <td>SBICAP Securities Ltd.</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">$0 (pipeline)</td>
+              <td class="right muted">Initiate</td>
+            </tr>
+            <tr style="opacity:.55;">
+              <td>KISETSU SAISON Finance</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">$0 (pipeline)</td>
+              <td class="right muted">Initiate</td>
+            </tr>
+            <tr style="opacity:.55;">
+              <td>SMFG India Credit Company</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">$0 (pipeline)</td>
+              <td class="right muted">Initiate</td>
+            </tr>
+            <tr style="opacity:.55;">
+              <td>RUPEEK Fintech Pvt. Ltd.</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">$0 (pipeline)</td>
+              <td class="right muted">Initiate</td>
+            </tr>
+            <tr style="opacity:.55;">
+              <td>AMPLE Technologies Pvt. Ltd.</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">$0 (pipeline)</td>
+              <td class="right muted">Initiate</td>
+            </tr>
+            <tr style="opacity:.55;">
+              <td>Sai Silks Kalamandir / GRT / Livpure</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">$0 (pipeline)</td>
+              <td class="right muted">Initiate</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:12px;padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:11px;color:var(--muted);">
+          ⚠ 6 of 9 WhatsApp-flagged accounts show <strong style="color:var(--text);">$0 attrition today</strong> but are in early pipeline stages — these represent <strong style="color:var(--wa);">forward-looking risk</strong> from Meta consumable pricing.
+        </div>
+
+        <!-- NCO+MC donut -->
+        <div style="margin-top:16px;display:grid;grid-template-columns:140px 1fr;gap:16px;align-items:center;">
+          <div style="position:relative;height:140px;">
+            <canvas id="ncoMcDonut"></canvas>
+            <div class="donut-center">
+              <div class="donut-center-val" style="font-size:16px;">$774K</div>
+              <div class="donut-center-label">NCO+MC</div>
+            </div>
+          </div>
+          <div>
+            <div class="prog-row">
+              <span class="prog-label" style="color:var(--fins);">FINS</span>
+              <div class="prog-bar-bg"><div class="prog-bar" style="width:56.4%;background:var(--fins);"></div></div>
+              <span class="prog-val">$437K</span>
+            </div>
+            <div class="prog-row">
+              <span class="prog-label" style="color:var(--cmi);">CMI</span>
+              <div class="prog-bar-bg"><div class="prog-bar" style="width:43.6%;background:var(--cmi);"></div></div>
+              <span class="prog-val">$337K</span>
+            </div>
+            <div class="prog-row">
+              <span class="prog-label" style="color:var(--tmt);">TMT/HRE</span>
+              <div class="prog-bar-bg"><div class="prog-bar" style="width:1%;background:var(--tmt);"></div></div>
+              <span class="prog-val" style="color:var(--muted);">$0</span>
+            </div>
+            <div class="prog-row">
+              <span class="prog-label" style="color:var(--esmb);">ESMB</span>
+              <div class="prog-bar-bg"><div class="prog-bar" style="width:1%;background:var(--esmb);"></div></div>
+              <span class="prog-val" style="color:var(--muted);">$0</span>
+            </div>
+            <div style="margin-top:8px;padding:8px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:6px;font-size:11px;color:var(--muted);">
+              WhatsApp subset: <strong style="color:var(--wa);">$397K (51.2%)</strong> concentrated entirely in FINS
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <span>FY27 Off-Cycle Attrition Dashboard · SASIA India · Data as of July 8, 2026</span>
+  <span>589 records · $6.67M total · Source: Salesforce Renewals Off-Cycle Forecast</span>
+</div>
+
+
+<script>
+// ── Global Chart Defaults ──
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = '#1e2d47';
+Chart.defaults.font.family = "Inter, system-ui, sans-serif";
+Chart.defaults.font.size = 11;
+
+const SEG_COLORS = {
+  FINS: '#38bdf8',
+  CMI: '#a78bfa',
+  'TMT/HRE': '#f472b6',
+  ESMB: '#fb923c'
+};
+const CLOUD_COLORS = {
+  Core: '#34d399',
+  MC: '#60a5fa',
+  Tableau: '#fbbf24',
+  MuleSoft: '#f87171',
+  Slack: '#c084fc'
+};
+
+// ── 1. Segment Donut ──
+(function() {
+  const ctx = document.getElementById('segDonut').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['ESMB', 'TMT/HRE', 'CMI', 'FINS'],
+      datasets: [{
+        data: [2401531, 1787818, 1761022, 726727],
+        backgroundColor: ['#fb923c', '#f472b6', '#a78bfa', '#38bdf8'],
+        borderColor: '#111827',
+        borderWidth: 3,
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '65%',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              const val = ctx.parsed;
+              const total = 6677098;
+              return ` $${(val/1000).toFixed(0)}K  (${(val/total*100).toFixed(1)}%)`;
+            }
+          }
+        }
+      }
+    }
+  });
+})();
+
+// ── 2. Segment Stacked Bar ──
+(function() {
+  const ctx = document.getElementById('segStackedBar').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['FINS', 'CMI', 'TMT/HRE', 'ESMB'],
+      datasets: [
+        {
+          label: 'Bad Debt',
+          data: [102887, 861791, 1274488, 2065123],
+          backgroundColor: 'rgba(248,113,113,0.85)',
+          borderRadius: 3
+        },
+        {
+          label: 'Restructure / Cancel',
+          data: [163512, 307513, 403098, 336408],
+          backgroundColor: 'rgba(251,191,36,0.85)',
+          borderRadius: 3
+        },
+        {
+          label: 'Non-Coterminous (NCO)',
+          data: [460328, 528973, 110231, 0],
+          backgroundColor: 'rgba(251,146,60,0.85)',
+          borderRadius: 3
+        },
+        {
+          label: 'Ramp Down',
+          data: [0, 62746, 0, 0],
+          backgroundColor: 'rgba(148,163,184,0.85)',
+          borderRadius: 3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom',
+          labels: { boxWidth: 10, padding: 12, font: { size: 10 } }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(ctx) {
+              return ` ${ctx.dataset.label}: $${(ctx.parsed.y/1000).toFixed(0)}K`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          grid: { display: false },
+          ticks: { color: '#94a3b8', font: { size: 11, weight: '600' } }
+        },
+        y: {
+          stacked: true,
+          grid: { color: 'rgba(255,255,255,.04)' },
+          ticks: {
+            color: '#64748b',
+            callback: v => `$${(v/1000).toFixed(0)}K`
+          }
+        }
+      }
+    }
+  });
+})();
+
+// ── 3. Cloud Heatmap Table ──
+(function() {
+  const data = {
+    FINS:    { Core: 330, MC: 506, Tableau: 0,  MuleSoft: 0,  Slack: 10  },
+    CMI:     { Core: 1411, MC: 957, Tableau: 63, MuleSoft: 0,  Slack: 19  },
+    'TMT/HRE': { Core: 1529, MC: 222, Tableau: 68, MuleSoft: 66, Slack: 95  },
+    ESMB:    { Core: 920, MC: 1417, Tableau: 87, MuleSoft: 0,  Slack: 31  }
+  };
+  const maxVal = 1529;
+  const segColors = { FINS: '#38bdf8', CMI: '#a78bfa', 'TMT/HRE': '#f472b6', ESMB: '#fb923c' };
+  const clouds = ['Core', 'MC', 'Tableau', 'MuleSoft', 'Slack'];
+
+  const tbody = document.getElementById('heatmapBody');
+  for (const [seg, vals] of Object.entries(data)) {
+    const tr = document.createElement('tr');
+    let html = `<td class="seg-cell"><span style="color:${segColors[seg]}">${seg}</span></td>`;
+    for (const cloud of clouds) {
+      const v = vals[cloud];
+      if (v === 0) {
+        html += `<td><span class="heat-cell heat-zero">—</span></td>`;
+      } else {
+        const intensity = v / maxVal;
+        const alpha = 0.08 + intensity * 0.62;
+        const textAlpha = 0.5 + intensity * 0.5;
+        const cloudColorMap = { Core: '52,211,153', MC: '96,165,250', Tableau: '251,191,36', MuleSoft: '248,113,113', Slack: '192,132,252' };
+        const rgb = cloudColorMap[cloud] || '255,255,255';
+        html += `<td><span class="heat-cell" style="background:rgba(${rgb},${alpha});color:rgba(255,255,255,${textAlpha});">$${v >= 1000 ? (v/1000).toFixed(1)+'M' : v+'K'}</span></td>`;
+      }
+    }
+    tbody.innerHTML += html;
+  }
+})();
+
+// ── 4. Cloud Grouped Bar ──
+(function() {
+  const ctx = document.getElementById('cloudBar').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['FINS', 'CMI', 'TMT/HRE', 'ESMB'],
+      datasets: [
+        { label: 'Core',     data: [330,  1411, 1529, 920],  backgroundColor: 'rgba(52,211,153,.85)',  borderRadius: 3 },
+        { label: 'MC',       data: [506,  957,  222,  1417], backgroundColor: 'rgba(96,165,250,.85)',  borderRadius: 3 },
+        { label: 'Tableau',  data: [0,    63,   68,   87],   backgroundColor: 'rgba(251,191,36,.85)',  borderRadius: 3 },
+        { label: 'MuleSoft', data: [0,    0,    66,   0],    backgroundColor: 'rgba(248,113,113,.85)', borderRadius: 3 },
+        { label: 'Slack',    data: [10,   19,   95,   31],   backgroundColor: 'rgba(192,132,252,.85)', borderRadius: 3 }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: c => ` ${c.dataset.label}: $${c.parsed.y}K`
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { weight: '600' } } },
+        y: {
+          grid: { color: 'rgba(255,255,255,.04)' },
+          ticks: { color: '#64748b', callback: v => `$${v}K` }
+        }
+      }
+    }
+  });
+})();
+
+// ── 5. Cloud Concentration Rows ──
+(function() {
+  const data = {
+    Core:     { FINS: [330, 727],  CMI: [1411, 1761], 'TMT/HRE': [1529, 1788], ESMB: [920, 2402] },
+    MC:       { FINS: [506, 727],  CMI: [957, 1761],  'TMT/HRE': [222, 1788],  ESMB: [1417, 2402] },
+    Tableau:  { FINS: [0, 727],    CMI: [63, 1761],   'TMT/HRE': [68, 1788],   ESMB: [87, 2402] },
+    MuleSoft: { FINS: [0, 727],    CMI: [0, 1761],    'TMT/HRE': [66, 1788],   ESMB: [0, 2402] },
+    Slack:    { FINS: [10, 727],   CMI: [19, 1761],   'TMT/HRE': [95, 1788],   ESMB: [31, 2402] }
+  };
+  const cloudColors = { Core: '#34d399', MC: '#60a5fa', Tableau: '#fbbf24', MuleSoft: '#f87171', Slack: '#c084fc' };
+  const segColors = { FINS: '#38bdf8', CMI: '#a78bfa', 'TMT/HRE': '#f472b6', ESMB: '#fb923c' };
+  const segs = ['FINS', 'CMI', 'TMT/HRE', 'ESMB'];
+
+  const container = document.getElementById('cloudConcentration');
+  for (const [cloud, segData] of Object.entries(data)) {
+    let html = `<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:4px 0;border-top:1px solid rgba(255,255,255,.04);">`;
+    html += `<div style="display:flex;align-items:center;padding:6px 8px;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:${cloudColors[cloud]};flex-shrink:0;display:inline-block;"></span><span style="font-size:11px;font-weight:600;color:${cloudColors[cloud]};">${cloud}</span></div>`;
+    for (const seg of segs) {
+      const [val, total] = segData[seg];
+      const pct = total > 0 ? (val / total * 100) : 0;
+      const alpha = pct > 0 ? Math.max(0.05, pct / 100) : 0;
+      const color = segColors[seg];
+      html += `<div style="padding:6px 8px;text-align:center;">
+        <div style="font-size:12px;font-weight:700;color:${pct > 0 ? '#fff' : '#334155'};">${pct > 0 ? pct.toFixed(0)+'%' : '—'}</div>
+        <div style="height:3px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:4px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${color};border-radius:2px;"></div></div>
+        <div style="font-size:10px;color:#64748b;margin-top:2px;">${val > 0 ? '$'+val+'K' : ''}</div>
+      </div>`;
+    }
+    html += `</div>`;
+    container.innerHTML += html;
+  }
+})();
+
+// ── 6. NCO Donut ──
+(function() {
+  const ctx = document.getElementById('ncoDonut').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['FINS (11)', 'CMI (18)', 'TMT/HRE (18)', 'ESMB (1)'],
+      datasets: [{
+        data: [460328, 528973, 110231, 0.1],
+        backgroundColor: ['#38bdf8', '#a78bfa', '#f472b6', '#fb923c'],
+        borderColor: '#111827',
+        borderWidth: 3,
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '62%',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: c => ` $${(c.parsed/1000).toFixed(0)}K`
+          }
+        }
+      }
+    }
+  });
+})();
+
+// ── 7. NCO Type Bar ──
+(function() {
+  const ctx = document.getElementById('ncoTypeBar').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['FINS', 'CMI', 'TMT/HRE', 'ESMB'],
+      datasets: [{
+        label: 'NCO Attrition',
+        data: [460, 529, 110, 0],
+        backgroundColor: ['rgba(56,189,248,.8)', 'rgba(167,139,250,.8)', 'rgba(244,114,182,.8)', 'rgba(251,146,60,.3)'],
+        borderRadius: 5,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: c => ` $${c.parsed.x}K` } }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,.04)' },
+          ticks: { color: '#64748b', callback: v => `$${v}K` }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { color: '#94a3b8', font: { weight: '600' } }
+        }
+      }
+    }
+  });
+})();
+
+// ── 8. NCO+MC Donut ──
+(function() {
+  const ctx = document.getElementById('ncoMcDonut').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['FINS', 'CMI', 'TMT/HRE', 'ESMB'],
+      datasets: [{
+        data: [437000, 337000, 0.1, 0.1],
+        backgroundColor: ['#38bdf8', '#a78bfa', 'rgba(244,114,182,.2)', 'rgba(251,146,60,.2)'],
+        borderColor: '#111827',
+        borderWidth: 3,
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '60%',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: c => ` $${(c.parsed/1000).toFixed(0)}K`
+          }
+        }
+      }
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
