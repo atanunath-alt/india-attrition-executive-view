@@ -1117,39 +1117,39 @@ const CLOUD_COLORS = {
     return `<span class="heat-cell" style="background:rgba(${rgb},${alpha});color:rgba(255,255,255,${textAlpha});${extraStyle||''}">${fmt(v)}</span>`;
   }
 
-  // cloud totals accumulator
-  const cloudTotals = {};
-  clouds.forEach(c => cloudTotals[c] = 0);
+  // Actual segment totals from source (each opp belongs to exactly one segment — no double-count)
+  const segTotals = { FINS: 727, CMI: 1761, 'TMT/HRE': 1788, ESMB: 2402 };
+  const maxSegTotal = Math.max(...Object.values(segTotals));
+
+  // Actual cloud totals from source (multi-cloud deals counted in each cloud — intentionally > $6.67M)
+  const cloudTotals = { Core: 4190, MC: 3102, Tableau: 218, MuleSoft: 66, Slack: 155 };
+  const maxCloudTotal = Math.max(...Object.values(cloudTotals));
 
   const tbody = document.getElementById('heatmapBody');
   for (const [seg, vals] of Object.entries(data)) {
-    let segTotal = 0;
-    clouds.forEach(c => { segTotal += vals[c]; cloudTotals[c] += vals[c]; });
-
     let html = `<td class="seg-cell"><span style="color:${segColors[seg]}">${seg}</span></td>`;
     for (const cloud of clouds) {
       html += `<td>${heatCell(vals[cloud], maxVal, cloud)}</td>`;
     }
-    // segment row total
-    const segIntensity = segTotal / Object.values(data).reduce((mx, v) => Math.max(mx, clouds.reduce((s,c)=>s+v[c],0)), 0);
-    const segAlpha = 0.08 + segIntensity * 0.5;
-    html += `<td style="border-left:1px solid var(--border);"><span class="heat-cell" style="background:rgba(226,232,240,${segAlpha});color:#fff;font-weight:800;">${fmt(segTotal)}</span></td>`;
+    // Row total: actual segment attrition (no double-count)
+    const st = segTotals[seg];
+    const segAlpha = 0.08 + (st / maxSegTotal) * 0.5;
+    html += `<td style="border-left:1px solid var(--border);"><span class="heat-cell" style="background:rgba(226,232,240,${segAlpha});color:#fff;font-weight:800;">${fmt(st)}</span></td>`;
     tbody.innerHTML += html;
   }
 
-  // footer: totals by cloud
-  const grandTotal = clouds.reduce((s,c) => s + cloudTotals[c], 0);
+  // Footer: actual cloud totals + true grand total
   const tfoot = document.getElementById('heatmapFoot');
   let footHtml = `<tr style="border-top:2px solid var(--border);">`;
   footHtml += `<td class="seg-cell" style="color:#e2e8f0;font-size:11px;text-transform:uppercase;letter-spacing:.5px;">Total</td>`;
   for (const cloud of clouds) {
     const v = cloudTotals[cloud];
     const rgb = cloudColorMap[cloud];
-    const intensity = v / grandTotal;
-    const alpha = 0.12 + intensity * 0.55;
+    const alpha = 0.12 + (v / maxCloudTotal) * 0.55;
     footHtml += `<td><span class="heat-cell" style="background:rgba(${rgb},${alpha});color:#fff;font-weight:800;">${fmt(v)}</span></td>`;
   }
-  footHtml += `<td style="border-left:1px solid var(--border);"><span class="heat-cell" style="background:rgba(56,189,248,.25);color:#fff;font-weight:800;">${fmt(grandTotal)}</span></td>`;
+  // Grand total cell = true total attrition
+  footHtml += `<td style="border-left:1px solid var(--border);"><span class="heat-cell" style="background:rgba(56,189,248,.25);color:#fff;font-weight:800;">$6.67M</span></td>`;
   footHtml += `</tr>`;
   tfoot.innerHTML = footHtml;
 })();
