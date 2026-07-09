@@ -464,7 +464,7 @@
     <div class="kpi-label">In-Cycle Attrition</div>
     <div class="kpi-value" style="color:var(--restructure);">$15.1M</div>
     <div class="kpi-sub">79 records</div>
-    <span class="kpi-pct" style="background:rgba(251,191,36,.15);color:var(--restructure);">incl. $13.7M MC</span>
+    <span class="kpi-pct" style="background:rgba(251,191,36,.15);color:var(--restructure);">incl. $13.5M MC</span>
   </div>
   <div class="kpi nco-kpi">
     <div class="kpi-label">Non-Coterminous (NCO)</div>
@@ -474,9 +474,9 @@
   </div>
   <div class="kpi nco-mc-kpi">
     <div class="kpi-label">MC Cloud Attrition</div>
-    <div class="kpi-value pink">$14.4M</div>
-    <div class="kpi-sub">66 accounts (all MC)</div>
-    <span class="kpi-pct pink">NCO+MC + in-cycle MC</span>
+    <div class="kpi-value pink">$16.6M</div>
+    <div class="kpi-sub">68 accounts (all MC)</div>
+    <span class="kpi-pct pink">off-cycle + in-cycle MC</span>
   </div>
   <div class="kpi wa-kpi">
     <div class="kpi-label">MC · WhatsApp Risk</div>
@@ -771,7 +771,7 @@
           <div>
             <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px;">
               <span style="color:var(--muted);">All MC Attrition (off+in-cycle)</span>
-              <span style="font-weight:700;color:var(--mc);">$14.4M · 66 accounts</span>
+              <span style="font-weight:700;color:var(--mc);">$16.6M · 68 accounts</span>
             </div>
             <div style="height:22px;background:rgba(96,165,250,.2);border-radius:4px;position:relative;overflow:hidden;">
               <div style="height:100%;width:100%;background:var(--mc);border-radius:4px;opacity:.7;"></div>
@@ -806,19 +806,19 @@
           <div class="alert-box">
             <div style="font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:4px;">Largest MC Attrition</div>
             <div style="font-size:13px;font-weight:700;color:var(--nco-mc);">Bharti Airtel</div>
-            <div style="font-size:22px;font-weight:800;color:#fff;line-height:1.1;">$2.32M</div>
+            <div style="font-size:22px;font-weight:800;color:#fff;line-height:1.1;">$2.51M</div>
             <div style="font-size:11px;color:var(--muted);margin-top:4px;">TMT/HRE · In-Cycle</div>
-            <div style="font-size:10px;color:var(--muted);margin-top:6px;line-height:1.4;">Followed by Paisabazaar $1.64M (FINS) and Hyundai Autoever $1.34M (CMI).</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:6px;line-height:1.4;">Followed by Hyundai Autoever $1.85M (CMI) and Paisabazaar $1.64M (FINS).</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px;">
               <div style="font-size:10px;text-transform:uppercase;color:var(--muted);">MC Attrition — FINS</div>
               <div style="font-size:18px;font-weight:700;color:var(--fins);">$5.81M</div>
-              <div style="font-size:10px;color:var(--muted);">14 accounts · 40% of MC total</div>
+              <div style="font-size:10px;color:var(--muted);">14 accounts · 35% of MC total</div>
             </div>
             <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px;">
               <div style="font-size:10px;text-transform:uppercase;color:var(--muted);">MC Attrition — CMI</div>
-              <div style="font-size:18px;font-weight:700;color:var(--cmi);">$4.45M</div>
+              <div style="font-size:18px;font-weight:700;color:var(--cmi);">$4.47M</div>
               <div style="font-size:10px;color:var(--muted);">21 accounts · Hyundai $1.85M top</div>
             </div>
           </div>
@@ -850,7 +850,7 @@
             </tr>
           </thead>
           <tbody>
-            <!-- With confirmed attrition — AOV from off-cycle Prior ACV field (not $0 NCO opps) -->
+            <!-- Confirmed attrition rows: Renewal AOV = Prior ACV from source file (always ≥ attrition for renewals; NCO rows show — since no prior contract) -->
             <tr>
               <td>Mahindra &amp; Mahindra Financial Svcs</td>
               <td><span class="seg-tag FINS">FINS</span></td>
@@ -887,14 +887,23 @@
             <tr style="background:rgba(56,189,248,.025);">
               <td colspan="6" style="padding:6px 8px;font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--accent);border-top:1px solid rgba(56,189,248,.2);">
                 ▼ In-Cycle · MC Accounts · Confirmed Attrition
+                <span style="font-size:9px;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:8px;">Renewal AOV = Prior ACV from in-cycle file · NCO/bad-debt rows have no prior contract (—)</span>
               </td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
               <td>Bharti Airtel Limited <span style="font-size:10px;color:var(--accent);margin-left:4px;">NEW</span></td>
               <td><span class="seg-tag TMT">TMT</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right" style="color:#fff;"><strong>$2,318,065</strong></td>
-              <td class="right muted">—</td>
+              <td class="right" style="color:#fff;"><strong>$2,514,667</strong></td>
+              <td class="right" style="color:#e2e8f0;">$4,448,848</td>
+              <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
+            </tr>
+            <tr style="background:rgba(56,189,248,.04);">
+              <td>Hyundai Autoever India Pvt Ltd <span style="font-size:10px;color:var(--accent);margin-left:4px;">NEW</span></td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right" style="color:#fff;"><strong>$1,848,958</strong></td>
+              <td class="right" style="color:#e2e8f0;">$1,848,958</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -902,15 +911,7 @@
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$1,640,372</strong></td>
-              <td class="right" style="color:#e2e8f0;">$2,021,876</td>
-              <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
-            </tr>
-            <tr style="background:rgba(56,189,248,.04);">
-              <td>Hyundai Autoever India Pvt Ltd <span style="font-size:10px;color:var(--accent);margin-left:4px;">NEW</span></td>
-              <td><span class="seg-tag CMI">CMI</span></td>
-              <td><span class="wa-tag">Yes</span></td>
-              <td class="right" style="color:#fff;"><strong>$1,341,910</strong></td>
-              <td class="right" style="color:#e2e8f0;">$235,405</td>
+              <td class="right" style="color:#e2e8f0;">$3,340,795</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -918,7 +919,7 @@
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right" style="color:#fff;"><strong>$1,059,565</strong></td>
-              <td class="right muted">—</td>
+              <td class="right" style="color:#e2e8f0;">$1,059,565</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -926,7 +927,7 @@
               <td><span class="seg-tag CMI">CMI</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$1,005,362</strong></td>
-              <td class="right" style="color:#e2e8f0;">$140,194</td>
+              <td class="right" style="color:#e2e8f0;">$1,005,362</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -934,7 +935,7 @@
               <td><span class="seg-tag TMT">TMT</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$903,648</strong></td>
-              <td class="right" style="color:#e2e8f0;">$363,753</td>
+              <td class="right" style="color:#e2e8f0;">$903,648</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -942,7 +943,7 @@
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$797,147</strong></td>
-              <td class="right" style="color:#e2e8f0;">$2,021,876</td>
+              <td class="right" style="color:#e2e8f0;">$2,718,504</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -950,7 +951,7 @@
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$672,851</strong></td>
-              <td class="right muted">—</td>
+              <td class="right" style="color:#e2e8f0;">$672,851</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -958,7 +959,23 @@
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$430,525</strong></td>
+              <td class="right" style="color:#e2e8f0;">$430,525</td>
+              <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
+            </tr>
+            <tr style="background:rgba(56,189,248,.04);">
+              <td>Emami Agrotech Limited <span style="font-size:10px;color:var(--accent);margin-left:4px;">NEW</span></td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right" style="color:#fff;"><strong>$345,870</strong></td>
               <td class="right muted">—</td>
+              <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
+            </tr>
+            <tr style="background:rgba(56,189,248,.04);">
+              <td>RateGain Travel Technologies <span style="font-size:10px;color:var(--accent);margin-left:4px;">NEW</span></td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right" style="color:#fff;"><strong>$317,542</strong></td>
+              <td class="right" style="color:#e2e8f0;">$317,542</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -966,15 +983,7 @@
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$289,719</strong></td>
-              <td class="right" style="color:#e2e8f0;">$314,286</td>
-              <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
-            </tr>
-            <tr style="background:rgba(56,189,248,.04);">
-              <td>Emami Agrotech Limited <span style="font-size:10px;color:var(--accent);margin-left:4px;">NEW</span></td>
-              <td><span class="seg-tag CMI">CMI</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right" style="color:#fff;"><strong>$283,252</strong></td>
-              <td class="right muted">—</td>
+              <td class="right" style="color:#e2e8f0;">$380,298</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -982,7 +991,15 @@
               <td><span class="seg-tag CMI">CMI</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$249,987</strong></td>
-              <td class="right" style="color:#e2e8f0;">$162,268</td>
+              <td class="right" style="color:#e2e8f0;">$404,187</td>
+              <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
+            </tr>
+            <tr style="background:rgba(56,189,248,.04);">
+              <td>Cognizant Technology Solutions India <span style="font-size:10px;color:var(--accent);margin-left:4px;">NEW</span></td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right" style="color:#fff;"><strong>$181,467</strong></td>
+              <td class="right" style="color:#e2e8f0;">$181,467</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -998,7 +1015,7 @@
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$161,515</strong></td>
-              <td class="right muted">—</td>
+              <td class="right" style="color:#e2e8f0;">$161,515</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <tr style="background:rgba(56,189,248,.04);">
@@ -1006,7 +1023,7 @@
               <td><span class="seg-tag TMT">TMT</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$159,507</strong></td>
-              <td class="right muted">—</td>
+              <td class="right" style="color:#e2e8f0;">$159,507</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
             <!-- NICSI: net-new from in-cycle -->
@@ -1538,30 +1555,30 @@
           <div style="position:relative;height:140px;">
             <canvas id="ncoMcDonut"></canvas>
             <div class="donut-center">
-              <div class="donut-center-val" style="font-size:14px;">$14.4M</div>
+              <div class="donut-center-val" style="font-size:14px;">$16.6M</div>
               <div class="donut-center-label">MC Total</div>
             </div>
           </div>
           <div>
             <div class="prog-row">
               <span class="prog-label" style="color:var(--fins);">FINS</span>
-              <div class="prog-bar-bg"><div class="prog-bar" style="width:40.2%;background:var(--fins);"></div></div>
+              <div class="prog-bar-bg"><div class="prog-bar" style="width:35.0%;background:var(--fins);"></div></div>
               <span class="prog-val">$5.81M</span>
             </div>
             <div class="prog-row">
               <span class="prog-label" style="color:var(--cmi);">CMI</span>
-              <div class="prog-bar-bg"><div class="prog-bar" style="width:30.8%;background:var(--cmi);"></div></div>
-              <span class="prog-val">$4.45M</span>
+              <div class="prog-bar-bg"><div class="prog-bar" style="width:26.9%;background:var(--cmi);"></div></div>
+              <span class="prog-val">$4.47M</span>
             </div>
             <div class="prog-row">
               <span class="prog-label" style="color:var(--tmt);">TMT/HRE</span>
-              <div class="prog-bar-bg"><div class="prog-bar" style="width:27.8%;background:var(--tmt);"></div></div>
-              <span class="prog-val">$4.02M</span>
+              <div class="prog-bar-bg"><div class="prog-bar" style="width:28.6%;background:var(--tmt);"></div></div>
+              <span class="prog-val">$4.75M</span>
             </div>
             <div class="prog-row">
               <span class="prog-label" style="color:var(--esmb);">ESMB</span>
-              <div class="prog-bar-bg"><div class="prog-bar" style="width:1.2%;background:var(--esmb);"></div></div>
-              <span class="prog-val">$168K</span>
+              <div class="prog-bar-bg"><div class="prog-bar" style="width:9.5%;background:var(--esmb);"></div></div>
+              <span class="prog-val">$1.59M</span>
             </div>
             <div style="margin-top:8px;padding:8px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:6px;font-size:11px;color:var(--muted);">
               WA-confirmed at-risk: <strong style="color:var(--wa);">$34.4M AOV · 62 accounts</strong> (no forecast)
@@ -1915,7 +1932,7 @@ const CLOUD_COLORS = {
     data: {
       labels: ['FINS', 'CMI', 'TMT/HRE', 'ESMB'],
       datasets: [{
-        data: [5811562, 4446548, 4015187, 168496],
+        data: [5811562, 4473552, 4745774, 1587507],
         backgroundColor: ['#38bdf8', '#a78bfa', '#f472b6', '#fb923c'],
         borderColor: '#111827',
         borderWidth: 3,
@@ -1930,7 +1947,7 @@ const CLOUD_COLORS = {
         legend: { display: false },
         tooltip: {
           callbacks: {
-            label: c => ` $${(c.parsed/1000000).toFixed(2)}M (${(c.parsed/14441793*100).toFixed(1)}%)`
+            label: c => ` $${(c.parsed/1000000).toFixed(2)}M (${(c.parsed/16618395*100).toFixed(1)}%)`
           }
         }
       }
