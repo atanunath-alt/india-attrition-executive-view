@@ -828,94 +828,216 @@
       <!-- NCO+MC Account Table -->
       <div class="card">
         <div class="card-title">
-          NCO + MC Accounts with Attrition
-          <small>Top opportunities by $ at risk</small>
+          NCO + MC Accounts — Full Risk List
+          <small>26 accounts · off-cycle + in-cycle</small>
         </div>
+        <div style="max-height:420px;overflow-y:auto;">
         <table class="nco-table">
-          <thead>
+          <thead style="position:sticky;top:0;background:var(--card);z-index:1;">
             <tr>
               <th>Account</th>
               <th>Seg</th>
               <th>WA?</th>
               <th class="right">Attrition</th>
-              <th class="right">Stage</th>
+              <th class="right">Source</th>
             </tr>
           </thead>
           <tbody>
+            <!-- With confirmed attrition -->
             <tr>
-              <td>Mahindra & Mahindra Financial Svcs</td>
+              <td>Mahindra &amp; Mahindra Financial Svcs</td>
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$396,822</strong></td>
-              <td class="right muted">01 Initiate</td>
+              <td class="right muted">Off-Cycle</td>
             </tr>
             <tr>
               <td>Eicher Motors Limited</td>
               <td><span class="seg-tag CMI">CMI</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right" style="color:#fff;"><strong>$223,329</strong></td>
-              <td class="right muted">01 Initiate</td>
+              <td class="right muted">Off-Cycle</td>
             </tr>
             <tr>
               <td>Parag Milk Foods Limited</td>
               <td><span class="seg-tag CMI">CMI</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right" style="color:#fff;"><strong>$113,929</strong></td>
-              <td class="right muted">01 Initiate</td>
+              <td class="right muted">Off-Cycle</td>
             </tr>
             <tr>
               <td>Aditya Birla Capital Ltd.</td>
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right" style="color:#fff;"><strong>$40,254</strong></td>
-              <td class="right muted">01 Initiate</td>
+              <td class="right muted">Off-Cycle</td>
             </tr>
-            <tr style="opacity:.55;">
+            <!-- NICSI: net-new from in-cycle -->
+            <tr style="background:rgba(56,189,248,.04);">
+              <td>NICSI <span style="font-size:10px;color:var(--accent);margin-left:4px;">NEW</span></td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right" style="color:#fff;"><strong>$13,776</strong></td>
+              <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
+            </tr>
+            <!-- $0 risk accounts -->
+            <tr style="opacity:.7;">
               <td>SBICAP Securities Ltd.</td>
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">$0 (pipeline)</td>
-              <td class="right muted">Initiate</td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
             </tr>
-            <tr style="opacity:.55;">
-              <td>KISETSU SAISON Finance</td>
+            <tr style="opacity:.7;">
+              <td>KISETSU SAISON Finance (India)</td>
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">$0 (pipeline)</td>
-              <td class="right muted">Initiate</td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
             </tr>
-            <tr style="opacity:.55;">
+            <tr style="opacity:.7;">
               <td>SMFG India Credit Company</td>
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">$0 (pipeline)</td>
-              <td class="right muted">Initiate</td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
             </tr>
-            <tr style="opacity:.55;">
+            <tr style="opacity:.7;">
               <td>RUPEEK Fintech Pvt. Ltd.</td>
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">$0 (pipeline)</td>
-              <td class="right muted">Initiate</td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
             </tr>
-            <tr style="opacity:.55;">
+            <tr style="opacity:.7;">
+              <td>Godrej Finance Limited</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
               <td>AMPLE Technologies Pvt. Ltd.</td>
               <td><span class="seg-tag TMT">TMT</span></td>
               <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">$0 (pipeline)</td>
-              <td class="right muted">Initiate</td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
             </tr>
-            <tr style="opacity:.55;">
-              <td>Sai Silks Kalamandir / GRT / Livpure</td>
+            <tr style="opacity:.7;">
+              <td>Tata Play Limited</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>Narayana Hrudayalaya Limited</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>Apollo Hospitals Enterprise Ltd.</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>Dr. Reddy's Laboratories Limited</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>G Square Realtors Pvt. Ltd.</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>Jeena Sikho Lifecare Ltd.</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>Signature Global (India) Limited</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>GRT Jewellers (India) Pvt. Ltd.</td>
               <td><span class="seg-tag CMI">CMI</span></td>
               <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">$0 (pipeline)</td>
-              <td class="right muted">Initiate</td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>Sai Silks Kalamandir Limited</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>LIVPURE Private Limited</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>Blue Star Limited</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>TVS Motor Company Ltd.</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>Mahindra &amp; Mahindra Ltd. (CDP)</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>Mahindra &amp; Mahindra Ltd. (Farm Division)</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.7;">
+              <td>TalentSprint.com</td>
+              <td><span class="seg-tag ESMB">ESMB</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">Off-Cycle</td>
             </tr>
           </tbody>
         </table>
-        <div style="margin-top:12px;padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:11px;color:var(--muted);">
-          ⚠ 6 of 9 WhatsApp-flagged accounts show <strong style="color:var(--text);">$0 attrition today</strong> but are in early pipeline stages — these represent <strong style="color:var(--wa);">forward-looking risk</strong> from Meta consumable pricing.
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+          <div style="padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:11px;color:var(--muted);flex:1;">
+            ⚠ Accounts showing <strong style="color:var(--text);">"At risk"</strong> have $0 forecasted attrition today but carry active MC/WhatsApp NCO exposure — treated as forward-looking risk per business direction.
+          </div>
+          <div style="padding:8px 12px;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.2);border-radius:8px;font-size:11px;color:var(--accent);white-space:nowrap;">
+            <strong>NEW</strong> = from in-cycle file
+          </div>
         </div>
 
         <!-- NCO+MC donut -->
