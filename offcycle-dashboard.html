@@ -839,16 +839,18 @@
               <th>Seg</th>
               <th>WA?</th>
               <th class="right">Attrition</th>
+              <th class="right">Renewal AOV</th>
               <th class="right">Source</th>
             </tr>
           </thead>
           <tbody>
-            <!-- With confirmed attrition -->
+            <!-- With confirmed attrition — AOV from off-cycle Prior ACV field (not $0 NCO opps) -->
             <tr>
               <td>Mahindra &amp; Mahindra Financial Svcs</td>
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right" style="color:#fff;"><strong>$396,822</strong></td>
+              <td class="right muted">—</td>
               <td class="right muted">Off-Cycle</td>
             </tr>
             <tr>
@@ -856,6 +858,7 @@
               <td><span class="seg-tag CMI">CMI</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right" style="color:#fff;"><strong>$223,329</strong></td>
+              <td class="right muted">—</td>
               <td class="right muted">Off-Cycle</td>
             </tr>
             <tr>
@@ -863,6 +866,7 @@
               <td><span class="seg-tag CMI">CMI</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right" style="color:#fff;"><strong>$113,929</strong></td>
+              <td class="right muted">—</td>
               <td class="right muted">Off-Cycle</td>
             </tr>
             <tr>
@@ -870,6 +874,7 @@
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right" style="color:#fff;"><strong>$40,254</strong></td>
+              <td class="right muted">—</td>
               <td class="right muted">Off-Cycle</td>
             </tr>
             <!-- NICSI: net-new from in-cycle -->
@@ -878,154 +883,176 @@
               <td><span class="seg-tag TMT">TMT</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right" style="color:#fff;"><strong>$13,776</strong></td>
+              <td class="right" style="color:var(--muted);">$13,776</td>
               <td class="right" style="color:var(--accent);font-size:10px;">In-Cycle</td>
             </tr>
-            <!-- $0 risk accounts -->
-            <tr style="opacity:.7;">
-              <td>SBICAP Securities Ltd.</td>
-              <td><span class="seg-tag FINS">FINS</span></td>
-              <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>KISETSU SAISON Finance (India)</td>
-              <td><span class="seg-tag FINS">FINS</span></td>
-              <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
+            <!-- At-risk accounts — Renewal AOV from org62 SOQL query -->
+            <tr style="opacity:.85;">
               <td>SMFG India Credit Company</td>
               <td><span class="seg-tag FINS">FINS</span></td>
               <td><span class="wa-tag">Yes</span></td>
               <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$3,368,617</td>
               <td class="right muted">Off-Cycle</td>
             </tr>
-            <tr style="opacity:.7;">
-              <td>RUPEEK Fintech Pvt. Ltd.</td>
-              <td><span class="seg-tag FINS">FINS</span></td>
-              <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>Godrej Finance Limited</td>
-              <td><span class="seg-tag FINS">FINS</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>AMPLE Technologies Pvt. Ltd.</td>
-              <td><span class="seg-tag TMT">TMT</span></td>
-              <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>Tata Play Limited</td>
-              <td><span class="seg-tag TMT">TMT</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>Narayana Hrudayalaya Limited</td>
-              <td><span class="seg-tag TMT">TMT</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>Apollo Hospitals Enterprise Ltd.</td>
-              <td><span class="seg-tag TMT">TMT</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>Dr. Reddy's Laboratories Limited</td>
-              <td><span class="seg-tag TMT">TMT</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>G Square Realtors Pvt. Ltd.</td>
-              <td><span class="seg-tag TMT">TMT</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>Jeena Sikho Lifecare Ltd.</td>
-              <td><span class="seg-tag TMT">TMT</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>Signature Global (India) Limited</td>
-              <td><span class="seg-tag TMT">TMT</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>GRT Jewellers (India) Pvt. Ltd.</td>
-              <td><span class="seg-tag CMI">CMI</span></td>
-              <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>Sai Silks Kalamandir Limited</td>
-              <td><span class="seg-tag CMI">CMI</span></td>
-              <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>LIVPURE Private Limited</td>
-              <td><span class="seg-tag CMI">CMI</span></td>
-              <td><span class="wa-tag">Yes</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>Blue Star Limited</td>
-              <td><span class="seg-tag CMI">CMI</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
-              <td>TVS Motor Company Ltd.</td>
-              <td><span class="seg-tag CMI">CMI</span></td>
-              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
-              <td class="right muted">At risk</td>
-              <td class="right muted">Off-Cycle</td>
-            </tr>
-            <tr style="opacity:.7;">
+            <tr style="opacity:.85;">
               <td>Mahindra &amp; Mahindra Ltd. (CDP)</td>
               <td><span class="seg-tag CMI">CMI</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$1,850,889</td>
               <td class="right muted">Off-Cycle</td>
             </tr>
-            <tr style="opacity:.7;">
+            <tr style="opacity:.85;">
+              <td>TVS Motor Company Ltd.</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$1,254,230</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>LIVPURE Private Limited</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$948,583</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>SBICAP Securities Ltd.</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$893,393</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>Blue Star Limited</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$875,303</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>Tata Play Limited</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$764,682</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>Apollo Hospitals Enterprise Ltd.</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$742,087</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>GRT Jewellers (India) Pvt. Ltd.</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$719,351</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
               <td>Mahindra &amp; Mahindra Ltd. (Farm Division)</td>
               <td><span class="seg-tag CMI">CMI</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$600,386</td>
               <td class="right muted">Off-Cycle</td>
             </tr>
-            <tr style="opacity:.7;">
+            <tr style="opacity:.85;">
+              <td>KISETSU SAISON Finance (India)</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$542,972</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>Narayana Hrudayalaya Limited</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$521,644</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>Godrej Finance Limited</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$452,634</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>G Square Realtors Pvt. Ltd.</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$419,966</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>Jeena Sikho Lifecare Ltd.</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$316,415</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>Signature Global (India) Limited</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$285,610</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>AMPLE Technologies Pvt. Ltd.</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$202,162</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>Sai Silks Kalamandir Limited</td>
+              <td><span class="seg-tag CMI">CMI</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$150,004</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
               <td>TalentSprint.com</td>
               <td><span class="seg-tag ESMB">ESMB</span></td>
               <td><span style="color:var(--muted);font-size:11px;">—</span></td>
               <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$119,747</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>RUPEEK Fintech Pvt. Ltd.</td>
+              <td><span class="seg-tag FINS">FINS</span></td>
+              <td><span class="wa-tag">Yes</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right" style="color:#e2e8f0;">$63,897</td>
+              <td class="right muted">Off-Cycle</td>
+            </tr>
+            <tr style="opacity:.85;">
+              <td>Dr. Reddy's Laboratories Limited</td>
+              <td><span class="seg-tag TMT">TMT</span></td>
+              <td><span style="color:var(--muted);font-size:11px;">—</span></td>
+              <td class="right muted">At risk</td>
+              <td class="right muted">—</td>
               <td class="right muted">Off-Cycle</td>
             </tr>
           </tbody>
@@ -1033,7 +1060,7 @@
         </div>
         <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
           <div style="padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:11px;color:var(--muted);flex:1;">
-            ⚠ Accounts showing <strong style="color:var(--text);">"At risk"</strong> have $0 forecasted attrition today but carry active MC/WhatsApp NCO exposure — treated as forward-looking risk per business direction.
+            ⚠ Accounts showing <strong style="color:var(--text);">"At risk"</strong> have $0 forecasted attrition today but carry active MC/WhatsApp NCO exposure. Renewal AOV = sum of all open renewal opps from org62 (INR converted at ₹84/$). Dr. Reddy's had no open renewal opps in org62.
           </div>
           <div style="padding:8px 12px;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.2);border-radius:8px;font-size:11px;color:var(--accent);white-space:nowrap;">
             <strong>NEW</strong> = from in-cycle file
